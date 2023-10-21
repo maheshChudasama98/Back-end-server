@@ -2,11 +2,16 @@ const { Op, Sequelize, } = require("sequelize")
 var jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const db = require("../Models")
+
 const secureKey = process.env.TOKEN_SECURE_KEY
 const message = require("../constants/messages")
+const emailActions = require("../../helpers/Email.helper")
+
 const UserModel = db.UserModel
 const UserTypesModel = db.UserTypesModel
-// ------------ || Login Controller   || ------------ //
+
+// ------------ || Login Controller || ------------ //
+
 const loginController = async (req, res) => {
     try {
         const payloadBody = req.body
@@ -16,7 +21,7 @@ const loginController = async (req, res) => {
                     { email: payloadBody?.email || "" },
                     { mobile: payloadBody?.mobile || "" }
                 ],
-                isActive : true
+                isActive: true
             },
             include: [{
                 model: UserTypesModel
@@ -75,6 +80,142 @@ const loginController = async (req, res) => {
     }
 }
 
+// ------------ || Forget Password Controller || ------------ //
+const forgotPasswordController = async (req, res) => {
+    try {
+        const payloadBody = req.body
+        const targetUser = await UserModel.findOne({
+            where: {
+                [Op.or]: [
+                    { email: payloadBody?.email || "" },
+                    { mobile: payloadBody?.mobile || "" }
+                ],
+                isActive: true
+            },
+            raw: true
+        })
+        if (targetUser?.userId) {
+            const min = 10000;
+            const max = 99999;
+            const optNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+            const emailDetails = {
+                to: "mahesh.chudasama098@gmail.com",
+                optNumber: optNumber
+            }
+            await emailActions.emailForgetPasswordSendOTP(emailDetails)
+            await UserModel.update(
+                { authOpt: optNumber },
+                { where: { userId: targetUser.userId } }).then(async (response) => {
+                    return res.status(200).send({
+                        status: true,
+                        message: message.EMAIL_OPT
+                    })
+                }).catch((error) => {
+                    return res.status(200).send({
+                        status: false,
+                        message: error.message
+                    })
+                })
+        } else {
+            return res.status(200).send({
+                status: false,
+                message: message.USER_NOT_VALID
+            })
+        }
+    } catch (error) {
+        return res.status(500).send({
+            status: false,
+            message: error.message
+        })
+    }
+}
+
+// ------------ || Change and Reset password  Controller || ------------ //
+const resetPasswordController = async (req, res) => {
+    try {
+        const payloadBody = req.body
+        const targetUser = await UserModel.findOne({
+            where: {
+                [Op.or]: [
+                    { email: payloadBody?.email || "" },
+                    { mobile: payloadBody?.mobile || "" }
+                ],
+                isActive: true
+            },
+            raw: true
+        })
+
+        if (payloadBody?.optNum && targetUser?.userId) {
+
+            const matchFindOpt = await UserModel.findOne({
+                where: {
+                    userId: targetUser.userId,
+                    authOpt: payloadBody.optNum
+                }, raw: true
+            })
+            if (matchFindOpt?.userId) {
+                await UserModel.update({
+                    authOpt: null,
+                    password: bcrypt.hashSync(payloadBody.password, 10)
+                },
+                    { where: { userId: matchFindOpt.userId } }).then(async (response) => {
+                        return res.status(200).send({
+                            status: true,
+                            message: message.CHANGE_PASSWORD
+                        })
+                    }).catch((error) => {
+                        return res.status(200).send({
+                            status: false,
+                            message: error.message
+                        })
+                    })
+            } else {
+                return res.status(200).send({
+                    status: false,
+                    message: message.OTP_NOT_MATCH
+                })
+            }
+
+        } else if (payloadBody?.oldPassword && targetUser?.userId) {
+            await bcrypt.compare(payloadBody.oldPassword, targetUser.password, async function (err, result) {
+                if (result) {
+                    await UserModel.update({
+                        password: bcrypt.hashSync(payloadBody.password, 10)
+                    },
+                        { where: { userId: targetUser.userId } }).then(async (response) => {
+                            return res.status(200).send({
+                                status: true,
+                                message: message.CHANGE_PASSWORD
+                            })
+                        }).catch((error) => {
+                            return res.status(200).send({
+                                status: false,
+                                message: error.message
+                            })
+                        })
+                } else {
+                    return res.status(200).send({
+                        status: false,
+                        message: message.CURRENT_PASSWORD_NOT_VALID
+                    })
+                }
+            })
+        } else {
+            return res.status(200).send({
+                status: false,
+                message: message.USER_NOT_VALID
+            })
+        }
+    } catch (error) {
+        return res.status(500).send({
+            status: false,
+            message: error.message
+        })
+    }
+}
+
 module.exports = {
-    loginController
+    loginController,
+    forgotPasswordController,
+    resetPasswordController
 }
