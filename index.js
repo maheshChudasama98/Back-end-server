@@ -2,10 +2,17 @@
 
 const express = require("express")
 const app = express()
-const port = process.env.PORT || 9090;
-
+const port = process.env.PORT || 8080;
+const cors = require('cors')
+const bodyParser = require('body-parser');
 require('dotenv').config(); // dotenv package need for access .env file
 app.use(express.json()); // express in json data fetch for user 
+
+app.use(cors());
+app.options('*', cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }))
 
 require('./src/api/models/index') //  All Models and Database connection  
 require('./src/api/routers/index')(app) // All Router index
