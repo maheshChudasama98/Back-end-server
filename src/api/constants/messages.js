@@ -2,6 +2,7 @@ module.exports = {
     // global messagesF 
     DUPLICATE: "Duplicate record",
     SUCCESS: "Successful",
+    NOT_VALID: "Not valid",
     ERROR: "Error",
 
     // Auth controller message
@@ -24,4 +25,10 @@ module.exports = {
     EDUCATION_UPDATED: "This education update was successful!",
     EDUCATION_DELETED: "This education deleted was successful!",
     EDUCATION_DUPLICATE: "This education has already been available",
+
+    // Experience controller messages
+    EXPERIENCE_CREATED: "Experience creation was a successful!",
+    EXPERIENCE_UPDATED: "This Experience update was successful!",
+    EXPERIENCE_DELETED: "This Experience deleted was successful!",
+    EXPERIENCE_DUPLICATE: "This Experience has already been available",
 }
