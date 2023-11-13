@@ -1,49 +1,57 @@
 require('dotenv').config();
 
 module.exports = (sequelize, DataTypes) => {
-    const ModelTable = sequelize.define('Users', {
-        userId: {
+    const ModelTable = sequelize.define('Education', {
+        educationId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
             allowNull: false,
             unique: true
         },
-        firstName: {
+        degreeName: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        lastName: {
+        institute: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        email: {
+        board: {
             type: DataTypes.STRING,
-            unique: true
+            allowNull: false,
         },
-        mobile: {
+        state: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        city: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        startMonth: {
             type: DataTypes.INTEGER,
-            unique: true
-        },
-        password: {
-            type: DataTypes.STRING(2000),
             allowNull: false,
         },
-        userTypeId: {
+        startYear: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: 3,
         },
-        imagePath: {
-            type: DataTypes.STRING(2000),
-        },
-        authOpt: {
+        endMonth: {
             type: DataTypes.INTEGER,
-        },
-        themeColor: {
-            type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: process.env.PROJECT_THEME_COLOR,
+        },
+        endYear: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        createdByUserId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        isActive: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true,
         },
         isDeleted: {
             type: DataTypes.BOOLEAN,
@@ -54,12 +62,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.DATE,
             defaultValue: sequelize.NOW,
         },
-        updatedAt: {
+        createdAt: {
             type: DataTypes.DATE,
             defaultValue: sequelize.NOW,
         },
     }, {
-        modelName: 'Users',
+        modelName: 'Education',
         initialAutoIncrement: 1,
         timestamps: false,
     });
