@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const secureKey = process.env.TOKEN_SECURE_KEY;
 
-const db = require('../Models/index')
+const db = require('../api/models')
 const UserModel = db.UserModel
 
 module.exports = async (req, res, next) => {
