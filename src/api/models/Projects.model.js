@@ -1,31 +1,23 @@
 require('dotenv').config();
 
 module.exports = (sequelize, DataTypes) => {
-    const ModelTable = sequelize.define('Education', {
-        educationId: {
+    const ModelTable = sequelize.define('Projects', {
+        projectId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
             allowNull: false,
             unique: true
         },
-        degreeName: {
+        projectName: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        institute: {
+        projectRole: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        board: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        state: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        city: {
+        achievements: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -49,6 +41,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        description: {
+            type: DataTypes.STRING(2000),
+        },
         isActive: {
             type: DataTypes.BOOLEAN,
             defaultValue: true,
@@ -68,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: sequelize.NOW,
         },
     }, {
-        modelName: 'Education',
+        modelName: 'Projects',
         initialAutoIncrement: 1,
         timestamps: false,
     });

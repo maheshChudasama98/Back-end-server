@@ -36,8 +36,8 @@ const userModifyController = async (req, res) => {
                         message: error.message
                     })
                 })
-            } else if (findDuplicateUser?.userId && findDuplicateUser.isActive == false) {
-                payloadBody.isActive = true
+            } else if (findDuplicateUser?.userId && findDuplicateUser.isDeleted == true) {
+                payloadBody.isDeleted = false
                 await UserModel.update(payloadBody, { where: { userId: findDuplicateUser.userId } }).then(() => {
                     return res.status(200).send({
                         status: true,
@@ -56,7 +56,7 @@ const userModifyController = async (req, res) => {
                 })
             }
         } else {
-            if ((findDuplicateUser?.userId && findDuplicateUser.userId == payloadBody.userId && findDuplicateUser.isActive == true) || (!findDuplicateUser?.userId)) {
+            if ((findDuplicateUser?.userId && findDuplicateUser.userId == payloadBody.userId && findDuplicateUser.isDeleted == false) || (!findDuplicateUser?.userId)) {
                 payloadBody.updatedAt = new Date
                 await UserModel.update(payloadBody, { where: { userId: payloadBody.userId } }).then(() => {
                     return res.status(200).send({
@@ -91,13 +91,13 @@ const userDeleteController = async (req, res) => {
         const targetUser = await UserModel.findOne({
             where: {
                 userId: payloadParam.id,
-                isActive: true
+                isDeleted: false
             },
             raw: true
         })
         if (targetUser?.userId) {
             await UserModel.update({
-                isActive: false
+                isDeleted: true
             }, { where: { userId: targetUser.userId } }).then(() => {
                 return res.status(200).send({
                     status: true,

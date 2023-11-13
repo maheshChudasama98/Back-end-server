@@ -1,48 +1,16 @@
 require('dotenv').config();
 
 module.exports = (sequelize, DataTypes) => {
-    const ModelTable = sequelize.define('Education', {
-        educationId: {
+    const ModelTable = sequelize.define('Certificates', {
+        certificateId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
             allowNull: false,
             unique: true
         },
-        degreeName: {
+        certificateName: {
             type: DataTypes.STRING,
-            allowNull: false,
-        },
-        institute: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        board: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        state: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        city: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        startMonth: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        startYear: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        endMonth: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        endYear: {
-            type: DataTypes.INTEGER,
             allowNull: false,
         },
         createdByUserId: {
@@ -68,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: sequelize.NOW,
         },
     }, {
-        modelName: 'Education',
+        modelName: 'Certificates',
         initialAutoIncrement: 1,
         timestamps: false,
     });

@@ -15,18 +15,20 @@ const UserTypesModel = db.UserTypesModel
 const loginController = async (req, res) => {
     try {
         const payloadBody = req.body
+        console.log(payloadBody);
         const targetUser = await UserModel.findOne({
             where: {
                 [Op.or]: [
                     { email: payloadBody?.email || "" },
                     { mobile: payloadBody?.mobile || "" }
                 ],
-                isActive: true
+                isDeleted: false
             },
             include: [{
                 model: UserTypesModel
             }]
         })
+        console.log(targetUser);
         if (targetUser?.userId) {
             await bcrypt.compare(payloadBody.password, targetUser.password, function (err, result) {
                 if (result) {
@@ -90,7 +92,7 @@ const forgotPasswordController = async (req, res) => {
                     { email: payloadBody?.email || "" },
                     { mobile: payloadBody?.mobile || "" }
                 ],
-                isActive: true
+                isDeleted: false
             },
             raw: true
         })
@@ -140,7 +142,7 @@ const resetPasswordController = async (req, res) => {
                     { email: payloadBody?.email || "" },
                     { mobile: payloadBody?.mobile || "" }
                 ],
-                isActive: true
+                isDeleted: false
             },
             raw: true
         })
