@@ -4,4 +4,5 @@ module.exports = (app) => {
     require("./User.router")(app)
     require("./Education.router")(app)
     require("./Experience.router")(app)
+    require("./Project.router")(app)
 }

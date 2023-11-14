@@ -1,23 +1,20 @@
 const { Op, Sequelize, } = require("sequelize")
-const bcrypt = require('bcrypt');
 const MESSAGE = require("../constants/messages")
 const db = require("../models")
+const ProjectsModel = db.ProjectsModel
 
-const UserModel = db.UserModel
-const ExperienceModel = db.ExperienceModel
-
-// ------------ || Education Create and Modify Api controller   || ------------ //
-const experienceModifyController = async (req, res) => {
+// ------------ || Project Create and Modify Api controller   || ------------ //
+const projectModifyController = async (req, res) => {
     try {
         const payloadBody = req.body
         const payloadUser = req.user
         payloadBody.createdByUserId = payloadUser.userId
 
-        if (!payloadBody?.experienceId) {
-            await ExperienceModel.create(payloadBody).then(() => {
+        if (!payloadBody?.projectId) {
+            await ProjectsModel.create(payloadBody).then(() => {
                 return res.status(200).send({
                     status: true,
-                    message: MESSAGE.EXPERIENCE_CREATED
+                    message: MESSAGE.PROJECT_CREATED
                 })
             }).catch((error) => {
                 return res.status(200).send({
@@ -28,30 +25,26 @@ const experienceModifyController = async (req, res) => {
 
         } else {
             const query = {
-                experienceId: payloadBody?.experienceId
+                projectId: payloadBody?.projectId
             }
-            const targetExperience = await ExperienceModel.findOne({
+            const targetProject = await ProjectsModel.findOne({
                 where: query,
                 raw: true
             })
-            if (targetExperience?.experienceId === payloadBody?.experienceId) {
-
-                await ExperienceModel.update(payloadBody, { where: { experienceId: payloadBody?.experienceId } }).then(() => {
+            if (targetProject?.projectId === payloadBody?.projectId) {
+                await ProjectsModel.update(payloadBody, { where: { projectId: payloadBody?.projectId } }).then(() => {
                     return res.status(200).send({
                         status: true,
-                        message: MESSAGE.EXPERIENCE_UPDATED
+                        message: MESSAGE.PROJECT_UPDATED
                     })
                 }).catch((error) => {
-
                     return res.status(200).send({
                         status: false,
                         message: error.message
                     })
                 })
-
             }
         }
-
     } catch (error) {
         return res.status(500).send({
             status: false,
@@ -60,8 +53,8 @@ const experienceModifyController = async (req, res) => {
     }
 }
 
-// ------------ || Education as user list api controller   || ------------ //
-const experienceFetchListController = async (req, res) => {
+// ------------ || Project as user list api controller   || ------------ //
+const projectFetchListController = async (req, res) => {
     try {
         const payloadParam = req.user
         const query = {
@@ -69,7 +62,7 @@ const experienceFetchListController = async (req, res) => {
             isDeleted: false
         }
 
-        const experienceList = await ExperienceModel.findAll({
+        const projectList = await ProjectsModel.findAll({
             where: query,
             order: [
                 ['startYear', 'DESC'],
@@ -79,7 +72,7 @@ const experienceFetchListController = async (req, res) => {
         })
         return res.status(200).send({
             status: true,
-            data: experienceList,
+            data: projectList,
             message: MESSAGE.SUCCESS
         })
 
@@ -91,28 +84,28 @@ const experienceFetchListController = async (req, res) => {
     }
 }
 
-// ------------ || Education Delete api controller   || ------------ //
-const experienceDeleteController = async (req, res) => {
+// ------------ || Project Delete api controller   || ------------ //
+const projectDeleteController = async (req, res) => {
     try {
         const payloadParam = req.params
         const payloadUser = req.user
 
-        const targetExperience = await ExperienceModel.findOne({
+        const targetProject = await ProjectsModel.findOne({
             where: {
                 isDeleted: false,
-                experienceId: payloadParam.id,
+                projectId: payloadParam.id,
                 createdByUserId: payloadUser.userId,
             },
             raw: true
         })
-        if (targetExperience?.experienceId) {
-            await ExperienceModel.update({
+        if (targetProject?.projectId) {
+            await ProjectsModel.update({
                 isDeleted: true,
                 isActive: false,
-            }, { where: { experienceId: targetExperience.experienceId } }).then(() => {
+            }, { where: { projectId: targetProject.projectId } }).then(() => {
                 return res.status(200).send({
                     status: true,
-                    message: MESSAGE.EXPERIENCE_DELETED
+                    message: MESSAGE.PROJECT_DELETED
                 })
             }).catch((error) => {
                 return res.status(200).send({
@@ -120,14 +113,12 @@ const experienceDeleteController = async (req, res) => {
                     message: error.message
                 })
             })
-
         } else {
             return res.status(200).send({
                 status: false,
                 message: MESSAGE.ERROR
             })
         }
-
     } catch (error) {
         return res.status(500).send({
             status: false,
@@ -137,8 +128,8 @@ const experienceDeleteController = async (req, res) => {
 }
 
 module.exports = {
-    experienceModifyController,
-    experienceFetchListController,
-    experienceDeleteController
+    projectModifyController,
+    projectFetchListController,
+    projectDeleteController
 }
 

@@ -31,4 +31,10 @@ module.exports = {
     EXPERIENCE_UPDATED: "This Experience update was successful!",
     EXPERIENCE_DELETED: "This Experience deleted was successful!",
     EXPERIENCE_DUPLICATE: "This Experience has already been available",
+
+    // Project controller messages
+    PROJECT_CREATED: "Project creation was a successful!",
+    PROJECT_UPDATED: "This Project update was successful!",
+    PROJECT_DELETED: "This Project deleted was successful!",
+    PROJECT_DUPLICATE: "This Project has already been available",
 }
