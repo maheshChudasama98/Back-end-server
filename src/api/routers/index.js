@@ -5,4 +5,5 @@ module.exports = (app) => {
     require("./Education.router")(app)
     require("./Experience.router")(app)
     require("./Project.router")(app)
+    require("./Companies.router")(app)
 }

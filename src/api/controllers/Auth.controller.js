@@ -28,7 +28,6 @@ const loginController = async (req, res) => {
                 model: UserTypesModel
             }]
         })
-        console.log(targetUser);
         if (targetUser?.userId) {
             await bcrypt.compare(payloadBody.password, targetUser.password, function (err, result) {
                 if (result) {

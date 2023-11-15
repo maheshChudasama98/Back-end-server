@@ -37,4 +37,10 @@ module.exports = {
     PROJECT_UPDATED: "This Project update was successful!",
     PROJECT_DELETED: "This Project deleted was successful!",
     PROJECT_DUPLICATE: "This Project has already been available",
+
+    // Company controller messages
+    COMPANY_CREATED: "Company creation was a successful!",
+    COMPANY_UPDATED: "Company update was successful!",
+    COMPANY_DELETED: "Company deleted was successful!",
+    COMPANY_DUPLICATE: "Company has already been available",
 }
