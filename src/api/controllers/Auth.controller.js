@@ -74,6 +74,7 @@ const loginController = async (req, res) => {
         }
 
     } catch (error) {
+        console.log(`\x1b[91m ${error} \x1b[91m`)
         return res.status(500).send({
             status: false,
             message: error.message
@@ -112,6 +113,7 @@ const forgotPasswordController = async (req, res) => {
                         message: message.EMAIL_OPT
                     })
                 }).catch((error) => {
+                    console.log(`\x1b[91m ${error} \x1b[91m`)
                     return res.status(200).send({
                         status: false,
                         message: error.message
@@ -124,6 +126,7 @@ const forgotPasswordController = async (req, res) => {
             })
         }
     } catch (error) {
+        console.log(`\x1b[91m ${error} \x1b[91m`)
         return res.status(500).send({
             status: false,
             message: error.message
@@ -165,6 +168,7 @@ const resetPasswordController = async (req, res) => {
                             message: message.CHANGE_PASSWORD
                         })
                     }).catch((error) => {
+                        console.log(`\x1b[91m ${error} \x1b[91m`)
                         return res.status(200).send({
                             status: false,
                             message: error.message
@@ -189,6 +193,7 @@ const resetPasswordController = async (req, res) => {
                                 message: message.CHANGE_PASSWORD
                             })
                         }).catch((error) => {
+                            console.log(`\x1b[91m ${error} \x1b[91m`)
                             return res.status(200).send({
                                 status: false,
                                 message: error.message
@@ -208,6 +213,7 @@ const resetPasswordController = async (req, res) => {
             })
         }
     } catch (error) {
+        console.log(`\x1b[91m ${error} \x1b[91m`)
         return res.status(500).send({
             status: false,
             message: error.message

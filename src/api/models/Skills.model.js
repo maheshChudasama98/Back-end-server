@@ -1,21 +1,25 @@
 require('dotenv').config();
 
 module.exports = (sequelize, DataTypes) => {
-    const ModelTable = sequelize.define('Technology', {
-        technologyId: {
+    const ModelTable = sequelize.define('Skills', {
+        skillId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
             allowNull: false,
             unique: true
         },
-        TechnologyName: {
+        skillType: {
+            type: DataTypes.ENUM,
+            values: ['Technical', 'Soft', 'Language', 'Certificate'],
+            allowNull: false,
+        },
+        skillName: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        youKnow: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
+        imagePath: {
+            type: DataTypes.STRING(2000),
         },
         createdByUserId: {
             type: DataTypes.INTEGER,
@@ -40,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: sequelize.NOW,
         },
     }, {
-        modelName: 'Technology',
+        modelName: 'Skills',
         initialAutoIncrement: 1,
         timestamps: false,
     });

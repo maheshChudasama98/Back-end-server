@@ -20,6 +20,7 @@ const educationModifyController = async (req, res) => {
                     message: MESSAGE.EDUCATION_CREATED
                 })
             }).catch((error) => {
+                console.log(`\x1b[91m ${error} \x1b[91m`)
                 return res.status(200).send({
                     status: false,
                     message: error.message
@@ -42,7 +43,7 @@ const educationModifyController = async (req, res) => {
                         message: MESSAGE.EDUCATION_UPDATED
                     })
                 }).catch((error) => {
-
+                    console.log(`\x1b[91m ${error} \x1b[91m`)
                     return res.status(200).send({
                         status: false,
                         message: error.message
@@ -156,6 +157,8 @@ const educationFetchListController = async (req, res) => {
         })
 
     } catch (error) {
+
+        console.log(`\x1b[91m ${error} \x1b[91m`)
         return res.status(500).send({
             status: false,
             message: error.message
@@ -186,6 +189,8 @@ const educationDeleteController = async (req, res) => {
                     message: MESSAGE.EDUCATION_DELETED
                 })
             }).catch((error) => {
+                console.log(`\x1b[91m ${error} \x1b[91m`)
+
                 return res.status(200).send({
                     status: false,
                     message: error.message
@@ -200,6 +205,7 @@ const educationDeleteController = async (req, res) => {
         }
 
     } catch (error) {
+        console.log(`\x1b[91m ${error} \x1b[91m`)
         return res.status(500).send({
             status: false,
             message: error.message

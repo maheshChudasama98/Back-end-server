@@ -35,7 +35,7 @@ const SuperAdminDatabaseAction = async () => {
     }
     await bcrypt.hash(plaintextPassword, saltRounds, async (err, hash) => {
         if (err) {
-            console.error(err);
+            console.log(`\x1b[91m ${err} \x1b[91m`)
         } else {
             await UserModel.findOne({ where: adminUser }).then(async (res) => {
                 if (res === null) {

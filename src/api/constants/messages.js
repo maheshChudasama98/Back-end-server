@@ -43,4 +43,10 @@ module.exports = {
     COMPANY_UPDATED: "Company update was successful!",
     COMPANY_DELETED: "Company deleted was successful!",
     COMPANY_DUPLICATE: "Company has already been available",
+
+    // Skills controller messages
+    SKILL_CREATED: "Creation was a successful!",
+    SKILL_UPDATED: "Update was successful!",
+    SKILL_DELETED: "Deleted was successful!",
+    SKILL_DUPLICATE: "It has already been available",
 }

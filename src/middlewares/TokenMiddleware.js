@@ -10,7 +10,7 @@ module.exports = async (req, res, next) => {
     if (token !== undefined) {
         jwt.verify(token, secureKey, async (err, decoded) => {
             if (err) {
-                res.status(401).json({ status: false, msg: "Token is not valid!" })
+                res.status(401).json({ status: false, message: "Token is not valid!" })
                 throw err
             }
             else {
@@ -28,6 +28,6 @@ module.exports = async (req, res, next) => {
         })
     }
     else {
-        res.status(403).json({ status: false, msg: "No token provided!" })
+        res.status(403).json({ status: false, message: "No token provided!" })
     }
 }
