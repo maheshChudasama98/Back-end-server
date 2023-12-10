@@ -14,10 +14,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 
-require('./src/api/models/index') //  All Models and Database connection  
-require('./src/api/routers/index')(app) // All Router index
-const BasicController = require("./src/api/controllers/Basic.controller")
-BasicController.PrimeDatabaseAction()
+// require('./src/api/models/index') //  All Models and Database connection  
+// require('./src/api/routers/index')(app) // All Router index
+// const BasicController = require("./src/api/controllers/Basic.controller")
+// BasicController.PrimeDatabaseAction()
 
 // ------------ ||  Server listen port  || ------------ //
 app.listen(port, (error) => {
