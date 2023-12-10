@@ -1,11 +1,11 @@
 // ------------ ||  Express package  || ------------ //
+require('dotenv').config(); // dotenv package need for access .env file
 
 const express = require("express")
 const app = express()
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8090;
 const cors = require('cors')
 const bodyParser = require('body-parser');
-require('dotenv').config(); // dotenv package need for access .env file
 app.use(express.json()); // express in json data fetch for user 
 
 app.use(cors());

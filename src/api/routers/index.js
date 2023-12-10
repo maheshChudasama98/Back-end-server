@@ -1,5 +1,6 @@
 // ------------ || Include all routers file over here   || ------------ //
 module.exports = (app) => {
+    require("./WebProfile.router")(app)
     require("./Auth.router")(app)
     require("./User.router")(app)
     require("./Education.router")(app)
