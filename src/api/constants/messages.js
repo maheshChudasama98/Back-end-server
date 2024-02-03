@@ -49,4 +49,10 @@ module.exports = {
     SKILL_UPDATED: "Update was successful!",
     SKILL_DELETED: "Deleted was successful!",
     SKILL_DUPLICATE: "It has already been available",
+
+    // Category controller messages
+    CATEGORY_CREATED: "Category creation was a successful!",
+    CATEGORY_UPDATED: "Category update was successful!",
+    CATEGORY_DELETED: "Category deleted was successful!",
+    CATEGORY_DUPLICATE: "Category has already been available",
 }

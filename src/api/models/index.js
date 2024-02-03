@@ -39,5 +39,8 @@ db.TimeLogsModel.belongsTo(db.CategoryModel, { foreignKey: 'categoryId' });
 db.UserModel.hasMany(db.TimeLogsModel, { foreignKey: 'createdByUserId' }); // one to many
 db.TimeLogsModel.belongsTo(db.UserModel, { foreignKey: 'createdByUserId' });
 
+db.UserModel.hasMany(db.CategoryModel, { foreignKey: 'createdByUserId' }); // one to many
+db.CategoryModel.belongsTo(db.UserModel, { foreignKey: 'createdByUserId' });
+
 
 module.exports = db

@@ -8,4 +8,6 @@ module.exports = (app) => {
     require("./Project.router")(app)
     require("./Companies.router")(app)
     require("./Skills.router")(app)
+    require("./Category.router")(app)
+    require("./Timelog.router")(app)
 }

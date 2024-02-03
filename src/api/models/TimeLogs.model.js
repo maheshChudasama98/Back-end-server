@@ -2,7 +2,7 @@ require('dotenv').config();
 
 module.exports = (sequelize, DataTypes) => {
     const ModelTable = sequelize.define('TimeLogs', {
-        timeLogId: {
+        timelogId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
@@ -27,10 +27,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         date: {
             type: DataTypes.DATE,
-            allowNull: false,
-        },
-        useId: {
-            type: DataTypes.INTEGER,
             allowNull: false,
         },
         createdByUserId: {
