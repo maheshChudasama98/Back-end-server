@@ -10,6 +10,8 @@ db.ExperienceModel = require("./Experience.model")(sequelize, DataTypes)
 db.ProjectsModel = require("./Projects.model")(sequelize, DataTypes)
 db.CompaniesModel = require("./Companies.model")(sequelize, DataTypes)
 db.SkillsModel = require("./Skills.model")(sequelize, DataTypes)
+db.CategoryModel = require("./Category.model")(sequelize, DataTypes)
+db.TimeLogsModel = require("./TimeLogs.model")(sequelize, DataTypes)
 
 
 // Join Models here 
@@ -30,6 +32,12 @@ db.CompaniesModel.belongsTo(db.UserModel, { foreignKey: 'createdByUserId' });
 
 db.UserModel.hasMany(db.SkillsModel, { foreignKey: 'createdByUserId' }); // one to many
 db.SkillsModel.belongsTo(db.UserModel, { foreignKey: 'createdByUserId' });
+
+db.CategoryModel.hasMany(db.TimeLogsModel, { foreignKey: 'categoryId' }); // one to many
+db.TimeLogsModel.belongsTo(db.CategoryModel, { foreignKey: 'categoryId' });
+
+db.UserModel.hasMany(db.TimeLogsModel, { foreignKey: 'createdByUserId' }); // one to many
+db.TimeLogsModel.belongsTo(db.UserModel, { foreignKey: 'createdByUserId' });
 
 
 module.exports = db
