@@ -93,8 +93,6 @@ const categoryFetchListController = async (req, res) => {
         const query = {
             isDeleted: false
         }
-        console.log("categoryName");
-
         const categoryList = await CategoryModel.findAll({
             where: query,
             order: [

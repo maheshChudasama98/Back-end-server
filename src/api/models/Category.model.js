@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        categoryIcon: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         createdByUserId: {
             type: DataTypes.INTEGER,
             allowNull: false,

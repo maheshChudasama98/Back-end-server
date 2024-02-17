@@ -14,19 +14,15 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         startTime: {
-            type: DataTypes.TIME,
+            type: DataTypes.DATE,
             allowNull: false,
         },
         endTime: {
-            type: DataTypes.TIME,
+            type: DataTypes.DATE,
             allowNull: false,
         },
         totalTime: {
             type: DataTypes.TIME,
-            allowNull: false,
-        },
-        date: {
-            type: DataTypes.DATE,
             allowNull: false,
         },
         createdByUserId: {

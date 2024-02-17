@@ -6,79 +6,42 @@ const db = require("../models");
 const TimeLogsModel = db.TimeLogsModel
 const CategoryModel = db.CategoryModel
 
-// ------------ || Timelogs Create and Modify Api controller   || ------------ //
+// ------------ || Timelog Create and Modify Api controller   || ------------ //
 const timelogModifyController = async (req, res) => {
     try {
         const payloadBody = req.body
         const payloadUser = req.user
         payloadBody.createdByUserId = payloadUser.userId
 
-        const findDuplicateCategory = await TimeLogsModel.findOne({
-            where: {
-                categoryName: payloadBody?.categoryName,
-            },
-            raw: true
-        });
 
-        if (!payloadBody?.categoryId) {
-            payloadBody.createdAt = new Date
-            payloadBody.updatedAt = new Date
+        payloadBody.createdAt = new Date
+        payloadBody.updatedAt = new Date
 
-            if (!findDuplicateCategory?.categoryId) {
-                await TimeLogsModel.create(payloadBody).then(() => {
-                    return res.status(200).send({
-                        status: true,
-                        message: MESSAGE.CATEGORY_CREATED
-                    })
-                }).catch((error) => {
-                    return res.status(200).send({
-                        status: false,
-                        message: error.message
-                    })
+        if (!payloadBody?.timelogId) {
+
+            await TimeLogsModel.create(payloadBody).then(() => {
+                return res.status(200).send({
+                    status: true,
+                    message: MESSAGE.TIMELOG_CREATED
                 })
-            } else if (findDuplicateCategory?.categoryId && findDuplicateCategory.isDeleted == true) {
-                payloadBody.isDeleted = false
-                await TimeLogsModel.update(payloadBody, { where: { categoryId: findDuplicateCategory.categoryId } }).then(() => {
-                    return res.status(200).send({
-                        status: true,
-                        message: MESSAGE.USER_CREATED
-                    })
-                }).catch((error) => {
-                    return res.status(200).send({
-                        status: false,
-                        message: error.message
-                    })
-                })
-            } else {
+            }).catch((error) => {
                 return res.status(200).send({
                     status: false,
-                    message: MESSAGE.CATEGORY_DUPLICATE
+                    message: error.message
                 })
-            }
+            })
         } else {
-            if ((findDuplicateCategory?.categoryId && findDuplicateCategory.categoryId == payloadBody.categoryId && findDuplicateCategory.isDeleted == false) || (!findDuplicateCategory?.categoryId)) {
-
-                const payloadUser = req.user
-                payloadBody.createdByUserId = payloadUser.userId
-
-                payloadBody.updatedAt = new Date
-                await TimeLogsModel.update(payloadBody, { where: { categoryId: payloadBody.categoryId } }).then(() => {
-                    return res.status(200).send({
-                        status: true,
-                        message: MESSAGE.CATEGORY_UPDATED
-                    })
-                }).catch((error) => {
-                    return res.status(200).send({
-                        status: false,
-                        message: error.message
-                    })
+            await TimeLogsModel.update(payloadBody, { where: { timelogId: payloadBody.timelogId } }).then(() => {
+                return res.status(200).send({
+                    status: true,
+                    message: MESSAGE.TIMELOG_UPDATED
                 })
-            } else {
+            }).catch((error) => {
                 return res.status(200).send({
                     status: false,
-                    message: messages.CATEGORY_DUPLICATE
+                    message: error.message
                 })
-            }
+            })
         }
     } catch (error) {
         return res.status(500).send({
@@ -88,24 +51,29 @@ const timelogModifyController = async (req, res) => {
     }
 }
 
-// ------------ || Timelogs as user list api controller   || ------------ //
+// ------------ || Timelog as user list api controller   || ------------ //
 const timelogFetchListController = async (req, res) => {
     try {
         const query = {
             isDeleted: false
         }
-        console.log("categoryName");
-
-        const categoryList = await TimeLogsModel.findAll({
+        const timeLogList = await TimeLogsModel.findAll({
             where: query,
-            order: [
-                ['categoryName', 'ASC']
+            include: [
+                {
+                    model: CategoryModel,
+                    attributes: ['categoryName', 'categoryColor', 'categoryIcon'],
+                },
             ],
-            raw: true
+            attributes: ['timelogId', 'categoryId', 'startTime', 'endTime', 'totalTime'],
+            order: [
+                ['startTime', 'DESC'],
+                ['timelogId', 'ASC'],
+            ],
         })
         return res.status(200).send({
             status: true,
-            data: categoryList,
+            data: timeLogList,
             message: MESSAGE.SUCCESS
         })
 
@@ -118,27 +86,27 @@ const timelogFetchListController = async (req, res) => {
     }
 }
 
-// ------------ || Timelogs Delete api controller   || ------------ //
+// ------------ || Timelog Delete api controller   || ------------ //
 const timelogDeleteController = async (req, res) => {
     try {
         const payloadParam = req.params
         const payloadUser = req.user
 
-        const targetCategory = await TimeLogsModel.findOne({
+        const targetTimelog = await TimeLogsModel.findOne({
             where: {
                 isDeleted: false,
-                categoryId: payloadParam.id,
-                createdByUserId: payloadUser.categoryId,
+                timelogId: payloadParam.id,
+                createdByUserId: payloadUser.userId,
             },
             raw: true
         })
-        if (targetCategory?.categoryId) {
+        if (targetTimelog?.timelogId) {
             await TimeLogsModel.update({
                 isDeleted: true
-            }, { where: { categoryId: targetCategory.categoryId } }).then(() => {
+            }, { where: { timelogId: targetTimelog.timelogId } }).then(() => {
                 return res.status(200).send({
                     status: true,
-                    message: MESSAGE.EDUCATION_DELETED
+                    message: MESSAGE.TIMELOG_DELETED
                 })
             }).catch((error) => {
                 console.log(`\x1b[91m ${error} \x1b[91m`)

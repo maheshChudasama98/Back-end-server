@@ -55,4 +55,10 @@ module.exports = {
     CATEGORY_UPDATED: "Category update was successful!",
     CATEGORY_DELETED: "Category deleted was successful!",
     CATEGORY_DUPLICATE: "Category has already been available",
+
+    // Timelog controller messages
+    TIMELOG_CREATED: "Timelog creation was a successful!",
+    TIMELOG_UPDATED: "Timelog update was successful!",
+    TIMELOG_DELETED: "Timelog deleted was successful!",
+    TIMELOG_DUPLICATE: "Timelog has already been available",
 }
