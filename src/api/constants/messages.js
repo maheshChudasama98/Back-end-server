@@ -1,5 +1,6 @@
 module.exports = {
-    // global messagesF 
+    // global messages 
+    DEFAULT_PATH: "Server is live",
     DUPLICATE: "Duplicate record",
     SUCCESS: "Successful",
     NOT_VALID: "Not valid",
