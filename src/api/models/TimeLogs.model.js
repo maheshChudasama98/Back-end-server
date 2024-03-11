@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TIME,
             allowNull: false,
         },
+        details: {
+            type: DataTypes.STRING(2000),
+            allowNull: false,
+        },
         createdByUserId: {
             type: DataTypes.INTEGER,
             allowNull: false,

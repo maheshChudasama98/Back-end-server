@@ -55,6 +55,7 @@ module.exports = {
     CATEGORY_UPDATED: "Category update was successful!",
     CATEGORY_DELETED: "Category deleted was successful!",
     CATEGORY_DUPLICATE: "Category has already been available",
+    CATEGORY_TIMELOG_ASSOCIATED: "This category is associated with your time logs!",
 
     // Timelog controller messages
     TIMELOG_CREATED: "Timelog creation was a successful!",

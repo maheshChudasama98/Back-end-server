@@ -65,7 +65,7 @@ const timelogFetchListController = async (req, res) => {
                     attributes: ['categoryName', 'categoryColor', 'categoryIcon'],
                 },
             ],
-            attributes: ['timelogId', 'categoryId', 'startTime', 'endTime', 'totalTime'],
+            attributes: ['timelogId', 'categoryId', 'startTime', 'endTime', 'totalTime', 'details'],
             order: [
                 ['startTime', 'DESC'],
                 ['timelogId', 'ASC'],

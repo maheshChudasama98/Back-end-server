@@ -4,6 +4,7 @@ const MESSAGE = require("../constants/messages")
 const db = require("../models");
 
 const CategoryModel = db.CategoryModel
+const TimeLogsModel = db.TimeLogsModel
 
 // ------------ || Category Create and Modify Api controller   || ------------ //
 const categoryModifyController = async (req, res) => {
@@ -40,7 +41,7 @@ const categoryModifyController = async (req, res) => {
                 await CategoryModel.update(payloadBody, { where: { categoryId: findDuplicateCategory.categoryId } }).then(() => {
                     return res.status(200).send({
                         status: true,
-                        message: MESSAGE.USER_CREATED
+                        message: MESSAGE.CATEGORY_CREATED
                     })
                 }).catch((error) => {
                     return res.status(200).send({
@@ -75,7 +76,7 @@ const categoryModifyController = async (req, res) => {
             } else {
                 return res.status(200).send({
                     status: false,
-                    message: messages.CATEGORY_DUPLICATE
+                    message: MESSAGE.CATEGORY_DUPLICATE
                 })
             }
         }
@@ -121,6 +122,20 @@ const categoryDeleteController = async (req, res) => {
         const payloadParam = req.params
         const payloadUser = req.user
 
+        const findTimeLogCategory = await TimeLogsModel.findOne({
+            where: {
+                isDeleted: false,
+                categoryId: payloadParam.id,
+                createdByUserId: payloadUser.userId,
+            },
+            raw: true
+        })
+        if (findTimeLogCategory?.timelogId) {
+            return res.status(200).send({
+                status: false,
+                message: MESSAGE.CATEGORY_TIMELOG_ASSOCIATED
+            })
+        }
         const targetCategory = await CategoryModel.findOne({
             where: {
                 isDeleted: false,
@@ -135,7 +150,7 @@ const categoryDeleteController = async (req, res) => {
             }, { where: { categoryId: targetCategory.categoryId } }).then(() => {
                 return res.status(200).send({
                     status: true,
-                    message: MESSAGE.EDUCATION_DELETED
+                    message: MESSAGE.CATEGORY_DELETED
                 })
             }).catch((error) => {
                 console.log(`\x1b[91m ${error} \x1b[91m`)
