@@ -2,6 +2,7 @@ const { Op, Sequelize, } = require("sequelize")
 const bcrypt = require('bcrypt');
 const MESSAGE = require("../constants/messages")
 const db = require("../models");
+const moment = require("moment");
 
 const TimeLogsModel = db.TimeLogsModel
 const CategoryModel = db.CategoryModel
@@ -54,8 +55,22 @@ const timelogModifyController = async (req, res) => {
 // ------------ || Timelog as user list api controller   || ------------ //
 const timelogFetchListController = async (req, res) => {
     try {
+        const bodyParser = req.body
         const query = {
-            isDeleted: false
+            isDeleted: false,
+        }
+        if (bodyParser?.start && bodyParser?.end) {
+            query.startTime = {
+                [Op.and]: [
+                    { [Op.between]: [moment(bodyParser.start, 'DD/MM/YYYY').startOf('day').toDate(), moment(bodyParser.end, 'DD/MM/YYYY').endOf('day').toDate()] },
+                    { [Op.between]: [moment(bodyParser.start, 'DD/MM/YYYY').startOf('day').toDate(), moment(bodyParser.end, 'DD/MM/YYYY').endOf('day').toDate()] }
+                ]
+            };
+        }
+        if (bodyParser?.category) {
+            query.categoryId = {
+                [Op.or]: bodyParser?.category
+            };
         }
         const timeLogList = await TimeLogsModel.findAll({
             where: query,

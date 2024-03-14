@@ -1,0 +1,28 @@
+# Host Port 
+PORT: '8080'
+
+# Database configuration
+DATABASE_HOST: 'mysql-33d12f72-mahesh-2403.a.aivencloud.com'
+DATABASE_COLLECTION: 'defaultdb'
+DATABASE_USER: 'avnadmin'
+DATABASE_PASSWORD: 'AVNS_NluFlLrS3SPW6n0mxWN'
+DATABASE_PORT: 19545
+
+# Email configuration
+EMAIL_USER: 'user.my005@gmail.com'
+EMAIL_PASSWORD: 'mzznwdeaimuvnrhk'
+
+# Token key
+TOKEN_SECURE_KEY: 'admin@user'
+
+# Project Details
+PROJECT_NAME: 'Money View'
+PROJECT_OTHER: 'Mr. Yug'
+PROJECT_ADDRESS: 'Rajkot'
+PROJECT_IMAGE: 'admin@user'
+PROJECT_LOGO: 'admin@user'
+PROJECT_THEME_COLOR: '#aadd'
+
+# Main user details
+MAIN_USER_EMAIL: 'admin@gmail.com'
+MAIN_USER_PHONE: '7202841815'
