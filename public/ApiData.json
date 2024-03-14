@@ -1,8 +1,0 @@
-// http://localhost:9090/api/user/modify
-
-{
-    "userId":1,
-    "firstName": "Yug",
-    "lastName": "Chudasama",
-    "email": "admin@gmail.com"
-}
